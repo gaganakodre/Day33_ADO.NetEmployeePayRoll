@@ -14,7 +14,7 @@ namespace ADO.NetEmployeeProblem
         public string Address { get; set; }
         public int Phone { get; set; }
         public float BasicPay { get; set; }
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
         public string Gender { get; set; }
         
         public float TaxablePay { get; set; }

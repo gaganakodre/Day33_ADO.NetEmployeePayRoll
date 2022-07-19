@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace ADO.NetEmployeeProblem
                             employee.Gender = reader["Gender"] == DBNull.Value ? default : reader["Gender"].ToString();
                             employee.Department = reader["Department"] == DBNull.Value ? default : reader["Department"].ToString();
                             employee.Address = reader["Address"] == DBNull.Value ? default : reader["Address"].ToString();
-                            employee.StartDate = (DateTime)((reader["StartDate"] == DBNull.Value ? default : reader["StartDate"]));
+                            employee.StartDate = reader["StartDate"] == DBNull.Value ? default : reader["StartDate"].ToString();
                             employee.Phone = Convert.ToInt32(reader["Phone"] == DBNull.Value ? default : reader["Phone"]);
                             employee.BasicPay = Convert.ToInt32(reader["BasicPay"] == DBNull.Value ? default : reader["BasicPay"]);
                             employee.TaxablePay = Convert.ToInt32(reader["TaxablePay"] == DBNull.Value ? default : reader["TaxablePay"]);
