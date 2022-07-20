@@ -30,12 +30,12 @@ namespace ADO.NetEmployeeProblem
                     Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     //sqlreader provides a way to readind a stream from sql server it is also not inherited
-                    if(reader.HasRows)
+                    if (reader.HasRows)
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {//here if teh data is null we are replacing with the defult values
                          //or it will read the dta from tha specified row
-                            employee.EmployeeID=Convert.ToInt32(reader["EmployeeID"]==DBNull.Value ? default : reader["EmployeeID"]);
+                            employee.EmployeeID = Convert.ToInt32(reader["EmployeeID"] == DBNull.Value ? default : reader["EmployeeID"]);
                             employee.Name = reader["Name"] == DBNull.Value ? default : reader["Name"].ToString();
                             employee.Gender = reader["Gender"] == DBNull.Value ? default : reader["Gender"].ToString();
                             employee.Department = reader["Department"] == DBNull.Value ? default : reader["Department"].ToString();
@@ -48,7 +48,7 @@ namespace ADO.NetEmployeeProblem
                             employee.IncomTax = Convert.ToInt32(reader["IncomTax"] == DBNull.Value ? default : reader["IncomTax"]);
                             employee.Deductions = Convert.ToInt32(reader["Deductions"] == DBNull.Value ? default : reader["Deductions"]);
                             Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}", employee.Name,
-                                employee.EmployeeID, employee.Department, 
+                                employee.EmployeeID, employee.Department,
                                 employee.Address, employee.Phone, employee.Gender, employee.BasicPay,
                                 employee.Gender, employee.StartDate,
                                 employee.TaxablePay, employee.NetPay, employee.IncomTax, employee.Deductions);
@@ -56,7 +56,7 @@ namespace ADO.NetEmployeeProblem
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -66,7 +66,7 @@ namespace ADO.NetEmployeeProblem
             try
             {
                 Connection = new SqlConnection(ConncetionString);
-                SqlCommand command = new SqlCommand("dbo.spAddEmployee",Connection);
+                SqlCommand command = new SqlCommand("dbo.spAddEmployee", Connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 //command.Parameters.AddWithValue("@EmployeeName", model.EmployeeID);
@@ -106,6 +106,41 @@ namespace ADO.NetEmployeeProblem
                 Connection.Close();
 
             }
+        }
+
+        public void UpdateEmployee(EmployeePayRoll model)
+        {
+            try
+            {
+                
+                Connection = new SqlConnection(ConncetionString);
+                SqlCommand command = new SqlCommand("dbo.spUpdateEmployee", Connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@BasicPay", model.BasicPay);
+                command.Parameters.AddWithValue("@Name", model.Name);
+                this.Connection.Open();
+                var result = command.ExecuteNonQuery();
+                this.Connection.Close();
+                if (result != 0)
+                {
+                    Console.WriteLine("employee updates suceesfully into table");
+                }
+                else
+                {
+                    Console.WriteLine("Not interested");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+
+            }
+
         }
     }
 }
