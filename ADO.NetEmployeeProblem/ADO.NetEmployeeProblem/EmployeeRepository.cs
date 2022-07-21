@@ -310,6 +310,192 @@ namespace ADO.NetEmployeeProblem
                 Console.WriteLine(ex.Message);
             }
         }
+        public int getAggrigateSumSalary(EmployeePayRoll model)
+        {
+            try
+            {
+                int sum = 0;
+                
+                using (Connection = new SqlConnection(ConncetionString))
+                {
+                    string query = @"select sum(BasicPay) from  EmployeeTable GROUP BY Gender;";
+                    SqlCommand cmd = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            sum = (int)(sqlDataReader.GetDouble(0));
+                            //Console.WriteLine(cmd);
+                            
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    sqlDataReader.Close();
+                    Connection.Close();
+                    Console.WriteLine("The total sum of the basic salary" + sum);
+                    return sum;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public int getAggrigateAVGSalary(EmployeePayRoll model)
+        {
+            try
+            {
+                int avg = 0;
+
+                using (Connection = new SqlConnection(ConncetionString))
+                {
+                    string query = @"select AVG(BasicPay) from  EmployeeTable GROUP BY Gender;";
+                    SqlCommand cmd = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            avg = (int)(sqlDataReader.GetDouble(0));
+                           
+
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    sqlDataReader.Close();
+                    Connection.Close();
+                    Console.WriteLine("The total AVG of the basic salary" + avg);
+                    return avg;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public int getAggrigateMAXSalary(EmployeePayRoll model)
+        {
+            try
+            {
+                int max = 0;
+
+                using (Connection = new SqlConnection(ConncetionString))
+                {
+                    string query = @"select MAX(BasicPay) from  EmployeeTable GROUP BY Gender;";
+                    SqlCommand cmd = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                           max = (int)(sqlDataReader.GetDouble(0));
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    sqlDataReader.Close();
+                    Connection.Close();
+                    Console.WriteLine("The total MAX of the basic salary" + max);
+                    return max;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public int getAggrigateMINSalary(EmployeePayRoll model)
+        {
+            try
+            {
+                int min = 0;
+
+                using (Connection = new SqlConnection(ConncetionString))
+                {
+                    string query = @"select MIN(BasicPay) from  EmployeeTable GROUP BY Gender;";
+                    SqlCommand cmd = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            min = (int)(sqlDataReader.GetDouble(0));
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    sqlDataReader.Close();
+                    Connection.Close();
+                    Console.WriteLine("The total MIN of the basic salary" + min);
+                    return min;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public int getAggrigateCOUNTSalary(EmployeePayRoll model)
+        {
+            try
+            {
+                int count = 0;
+
+                using (Connection = new SqlConnection(ConncetionString))
+                {
+                    string query = @"select COUNT(EmployeeID) from  EmployeeTable GROUP BY Gender;";
+                    SqlCommand cmd = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            count = sqlDataReader.GetInt32(0);
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    sqlDataReader.Close();
+                    Connection.Close();
+                    Console.WriteLine("The total count of the basic salary" + count);
+                    return count;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
     }
 }

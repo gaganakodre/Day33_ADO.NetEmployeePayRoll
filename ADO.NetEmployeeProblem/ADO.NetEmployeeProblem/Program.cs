@@ -14,7 +14,7 @@ namespace ADO.NetEmployeeProblem
             EmployeePayRoll model = new EmployeePayRoll();
             Console.WriteLine("Enter the choice \n 0.GetAllEmployeeDetails\n 1.AddingEmployee\n" +
                 " 2.UpdateEmployee\n 3.DeletingTheEmployee\n 4.InsertIntoTwoTables\n" +
-                " 5.InsertionUsingTsql\n 6.RetrivetheEmployeeAccordingToDateRange");
+                " 5.InsertionUsingTsql\n 6.RetrivetheEmployeeAccordingToDateRange\n 7.FindSumAvgMinMaxCount");
             int choice=Convert.ToInt32(Console.ReadLine());
             switch(choice)
             {
@@ -76,7 +76,15 @@ namespace ADO.NetEmployeeProblem
                 case 6:
 
                     employeeRepo.RetrivetheEmployeeAccordingToDateRange(model);
-                    //employeeRepo.GetAllEmployees();
+                    
+                    break;
+                case 7:
+
+                    employeeRepo.getAggrigateSumSalary(model);
+                    employeeRepo.getAggrigateAVGSalary(model);
+                    employeeRepo.getAggrigateMAXSalary(model);
+                    employeeRepo.getAggrigateMINSalary(model);
+                    employeeRepo.getAggrigateCOUNTSalary(model);
                     break;
 
 
