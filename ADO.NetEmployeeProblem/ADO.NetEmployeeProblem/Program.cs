@@ -12,11 +12,15 @@ namespace ADO.NetEmployeeProblem
         {
             EmployeeRepository employeeRepo = new EmployeeRepository();
             EmployeePayRoll model = new EmployeePayRoll();
-            Console.WriteLine("Enter the choice \n 1.AddingEmployee\n" +
-                " 2.UpdateEmployee\n 3.DeletingTheEmployee\n 4.InsertIntoTwoTables");
+            Console.WriteLine("Enter the choice \n 0.GetAllEmployeeDetails\n 1.AddingEmployee\n" +
+                " 2.UpdateEmployee\n 3.DeletingTheEmployee\n 4.InsertIntoTwoTables\n 5.InsertionUsingTsql");
             int choice=Convert.ToInt32(Console.ReadLine());
             switch(choice)
             {
+                case 0:
+                    employeeRepo.GetAllEmployees();
+                    break;
+
                 case 1:
                     model.Name = "Gagana";
                     model.Department = "HR";
@@ -51,6 +55,14 @@ namespace ADO.NetEmployeeProblem
                     employeeRepo.InsertIntoTwoTables(model);
                     employeeRepo.GetAllEmployees();
                     break;
+                case 5:
+                    model.Name = "Gagana";
+                    model.Gender = "F";
+                    model.Address = "Bengaluru";
+                    employeeRepo.InsertIntoTwoTablesusingTSQL(model);
+                    employeeRepo.GetAllEmployees();
+                    break;
+
 
             }
             

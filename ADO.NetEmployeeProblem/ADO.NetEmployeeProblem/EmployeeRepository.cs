@@ -216,6 +216,48 @@ namespace ADO.NetEmployeeProblem
             }
 
         }
+        public void InsertIntoTwoTablesusingTSQL(EmployeePayRoll model)
+        {
+            SqlTransaction sqlTransaction=null;
+            try
+            {
+                Connection = new SqlConnection(ConncetionString);
+                this.Connection.Open();
+                sqlTransaction = Connection.BeginTransaction();
+                
+                SqlCommand command = new SqlCommand("spInsertIntoTwoTables", Connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Transaction= sqlTransaction;
+                command.Parameters.AddWithValue("@Name", model.Name);
+                command.Parameters.AddWithValue("@Gender", model.Gender);
+                command.Parameters.AddWithValue("@Address", model.Address);
+                //we are giving EmpIP than Employee id buz to know rollback is working or not
+                //command.Parameters.Add("@EmpID", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.Parameters.Add("@EmployeeID", SqlDbType.Int).Direction = ParameterDirection.Output;
+                var result = command.ExecuteScalar();
+
+                int newid = Convert.ToInt32(command.Parameters["@EmployeeID"].Value);
+
+                string query = $"insert into Salary (EmployeeID,OTSaraly) values({newid},{model.BasicPay})";
+                SqlCommand Comd = new SqlCommand(query, Connection);
+                int res = command.ExecuteNonQuery();
+                if (res != 0)
+                {
+                    Console.WriteLine("employee inserted suceesfully into table");
+                }
+                else
+                {
+                    Console.WriteLine("Not interested");
+                }
+
+            }
+            catch(Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                sqlTransaction.Rollback();
+            }
+        }
 
     }
 }
