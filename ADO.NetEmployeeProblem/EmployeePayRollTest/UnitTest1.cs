@@ -50,8 +50,9 @@ namespace ADO.NetEmployeeProblem
             //Arrange
             EmployeeRepository employeeRepo = new EmployeeRepository();
             EmployeePayRoll model = new EmployeePayRoll();
-            model.Name = "Karthika";
-            model.BasicPay = 900000;
+            model.Name = "Gowri";
+            //every time when i run it i have to change r else it will fail.
+            model.BasicPay = 800000;
             //act
 
             bool actual = employeeRepo.UpdateEmployee(model);
@@ -76,3 +77,13 @@ namespace ADO.NetEmployeeProblem
         }
     }
 }
+
+//o/p: all the test cases passed
+//Test Duration	Traits	Error Message
+//AbilityToCheckWeatherTheUpdatedEmployeePresentOrNotInDB Passed	1 ms		
+//Project: EmployeePayRollTest Passed(4) 318 ms
+//Namespace: ADO.NetEmployeeProblem Passed(4)    318 ms
+//Class: EmployeePayRollTests Passed(4)  318 ms
+//AbilityToAddTheNewEmployeeAndCompareWithObjectToDB Passed	308 ms		
+//AbilityToCheckWeatherTheDeleteEmployeeDeletedFromDB Passed	8 ms		
+//CheckConnection Passed	1 ms		
