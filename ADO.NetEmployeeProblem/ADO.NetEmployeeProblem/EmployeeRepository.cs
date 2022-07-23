@@ -251,30 +251,31 @@ namespace ADO.NetEmployeeProblem
 
         }
         public void InsertIntoTwoTablesusingTSQL(EmployeePayRoll model)
-        {
+        {//it represent the transcat-sql transaction to be made in sql server database
             SqlTransaction sqlTransaction=null;
             try
-            {
+            {//connecting with the sql server using connectin string
                 Connection = new SqlConnection(ConncetionString);
                 this.Connection.Open();
-                sqlTransaction = Connection.BeginTransaction();
-                
-                SqlCommand command = new SqlCommand("spInsertIntoTwoTables", Connection);
+                sqlTransaction = Connection.BeginTransaction();//starts a database transaction                
+                SqlCommand command = new SqlCommand("spInsertIntoTwoTables", Connection);//returns object
+                //to execute the commands we have to use the sqlcommand class and we have to pass the commands or sp
                 command.CommandType = CommandType.StoredProcedure;
-                command.Transaction= sqlTransaction;
-                command.Parameters.AddWithValue("@Name", model.Name);
+                command.Transaction= sqlTransaction;//this will gets or sets the transaction with commands
+                command.Parameters.AddWithValue("@Name", model.Name);//gets the sqlcollection
                 command.Parameters.AddWithValue("@Gender", model.Gender);
                 command.Parameters.AddWithValue("@Address", model.Address);
                 //we are giving EmpIP than Employee id buz to know rollback is working or not
                 //command.Parameters.Add("@EmpID", SqlDbType.Int).Direction = ParameterDirection.Output;
+                //its a overriden property which will show weather the given parameter is for output or input or for both 
                 command.Parameters.Add("@EmployeeID", SqlDbType.Int).Direction = ParameterDirection.Output;
-                var result = command.ExecuteScalar();
+                var result = command.ExecuteScalar();//it returns the first row of the result aftre execution
 
                 int newid = Convert.ToInt32(command.Parameters["@EmployeeID"].Value);
-
+                //here we are stroing the the result by converting into int
                 string query = $"insert into Salary (EmployeeID,OTSaraly) values({newid},{model.BasicPay})";
-                SqlCommand Comd = new SqlCommand(query, Connection);
-                int res = command.ExecuteNonQuery();
+                SqlCommand Comd = new SqlCommand(query, Connection);//executr theh command aganist query
+                int res = command.ExecuteNonQuery();//it execute aganist the connection and returns the affected rows
                 if (res != 0)
                 {
                     Console.WriteLine("employee inserted suceesfully into table");
