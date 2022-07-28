@@ -1,3 +1,5 @@
+using ADO.NetEmployeeProblem;
+
 namespace MultipleThread
 {
     public class Tests
@@ -37,6 +39,30 @@ namespace MultipleThread
             DateTime stopdateTimeThread = DateTime.Now;
             Console.WriteLine("Duration without thread:" + (stopdateTimeThread - starttimeThread));
 
+        }
+        [Test]
+        public void GivenQuery_WhenInsert_ShouldRecordExecutionTime()
+        {
+            EmployeeRepository payrollRepo = new EmployeeRepository();
+            EmployeePayRoll employeeModel = new EmployeePayRoll();
+            {
+                employeeModel.EmployeeID = 14;
+                employeeModel.Name = "Pooja";
+                employeeModel.BasicPay = 650000;
+                employeeModel.StartDate = "2019/07/07";
+                employeeModel.Gender = "F";
+                employeeModel.Phone = 678123;
+                employeeModel.Department = "HR";
+                employeeModel.Address = "BNG";
+                employeeModel.Deductions = 6000;
+                employeeModel.TaxablePay = 3500;
+                employeeModel.NetPay = 56000;
+                employeeModel.IncomTax = 1200;
+            };
+            DateTime startTimes = DateTime.Now;
+            payrollRepo.AddEmployee(employeeModel);
+            DateTime endTimes = DateTime.Now;
+            Console.WriteLine("Execution_Time_without_Thread_DB : " + (endTimes - startTimes));
         }
     }
 }
