@@ -92,5 +92,22 @@ namespace RestApiAndRestSharpEmployeePayRoll
             List<Employee> dataResorce = JsonConvert.DeserializeObject<List<Employee>>(response.Content);
             Assert.AreEqual(12, dataResorce.Count);
         }
+        [Test]
+        public void GivenEmployee_WhenUpdateSalary_ThenShouldReturnUpdatedEmployeeSalary()
+        {
+            RestRequest request = new RestRequest("/employees/10", Method.Put);
+            JsonObject jObjectBody = new JsonObject();
+            jObjectBody.Add("first_name", "Mouna");
+            jObjectBody.Add("last_name", "water");
+            jObjectBody.Add("email", "mouna@gmail.com");
+            request.AddParameter("application/json", jObjectBody, ParameterType.RequestBody);
+            RestResponse response = client.Execute(request);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Employee dataResorce = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Mouna", dataResorce.first_name);
+            Assert.AreEqual("water", dataResorce.last_name);
+            Assert.AreEqual("mouna@gmail.com", dataResorce.email); ;
+            Console.WriteLine(response.Content);
+        }
     }
 }

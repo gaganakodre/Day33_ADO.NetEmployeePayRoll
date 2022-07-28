@@ -44,6 +44,14 @@
 //      "email": "PP@gmail.com",
 //      "id": 12
 //    }
+//o/p:uc13-update
+//    Standard Output: 
+//{
+//    "first_name": "Mouna",
+//  "last_name": "water",
+//  "email": "mouna@gmail.com",
+//  "id": 10
+//}
 
 
 
