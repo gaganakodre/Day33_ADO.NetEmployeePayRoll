@@ -62,5 +62,35 @@ namespace RestApiAndRestSharpEmployeePayRoll
             Assert.AreEqual("jho@gmail.com", dataResponse.email);
 
         }
+        [Test]
+        public void GivenMultipleEmployee_OnPost_ThenShouldReturnEmployeeList()
+        {
+            List<Employee> employeeList = new List<Employee>();
+            employeeList.Add(new Employee { first_name = "Vinaya", last_name="jaya",email="jaya@gmail.com" });
+            employeeList.Add(new Employee { first_name = "Rudra", last_name = "magic", email = "Rudra@gmail.com" });
+            employeeList.Add(new Employee { first_name = "Peppa", last_name = "Pig", email = "MB@gmail.com" });
+            employeeList.Add(new Employee { first_name = "Masha", last_name = "Bear", email = "PP@gmail.com" });
+            foreach (var employeeData in employeeList)
+            {
+                RestRequest request = new RestRequest("/employees", Method.Post);
+                JsonObject jObjectBody = new JsonObject();
+                jObjectBody.Add("first_name", employeeData.first_name);
+                jObjectBody.Add("last_name", employeeData.last_name);
+                jObjectBody.Add("email", employeeData.email);
+                request.AddParameter("application/json", jObjectBody, ParameterType.RequestBody);
+                RestResponse response1 = client.Execute(request);
+                Assert.AreEqual(response1.StatusCode, HttpStatusCode.Created);
+                Employee dataResorce1 = JsonConvert.DeserializeObject<Employee>(response1.Content);
+                Assert.AreEqual(employeeData.first_name, dataResorce1.first_name);
+                Assert.AreEqual(employeeData.last_name, dataResorce1.last_name);
+                Assert.AreEqual(employeeData.email, dataResorce1.email);
+                System.Console.WriteLine(response1.Content);
+            };
+
+            RestResponse response = getEmployeeList();
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Employee> dataResorce = JsonConvert.DeserializeObject<List<Employee>>(response.Content);
+            Assert.AreEqual(12, dataResorce.Count);
+        }
     }
 }
