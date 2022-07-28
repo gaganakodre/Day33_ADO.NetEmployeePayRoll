@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Net;
+using System.Text.Json.Nodes;
 
 namespace RestApiAndRestSharpEmployeePayRoll
 {
@@ -42,6 +44,23 @@ namespace RestApiAndRestSharpEmployeePayRoll
             {
                 System.Console.WriteLine("id: " + e.id + ",FirstName: " + e.first_name +  ",LastName: " + e.last_name + ",Email" + e.email);
             }
+        }
+        [Test]
+        public void givenEmployee_OnPost_ShouldReturnAddedEmployee()
+        {
+            RestRequest request = new RestRequest("/employees", Method.Post);
+            JsonObject jObjectbody = new JsonObject();
+            jObjectbody.Add("first_name", "Ganesh");
+            jObjectbody.Add("last_name", "jhonny");
+            jObjectbody.Add("email", "jho@gmail.com");
+            request.AddParameter("application/json", jObjectbody, ParameterType.RequestBody);
+            RestResponse response = client.Execute(request);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Ganesh", dataResponse.first_name);
+            Assert.AreEqual("jhonny", dataResponse.last_name);
+            Assert.AreEqual("jho@gmail.com", dataResponse.email);
+
         }
     }
 }
