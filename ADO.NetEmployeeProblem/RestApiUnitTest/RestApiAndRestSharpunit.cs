@@ -109,5 +109,13 @@ namespace RestApiAndRestSharpEmployeePayRoll
             Assert.AreEqual("mouna@gmail.com", dataResorce.email); ;
             Console.WriteLine(response.Content);
         }
+        [Test]
+        public void GivenEmployeeId_WhenDelete_ThenShouldReturnSuccess()
+        {
+            RestRequest request = new RestRequest("/employees/11", Method.Delete);
+            RestResponse response = client.Execute(request);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Console.WriteLine(response.Content);
+        }
     }
 }
